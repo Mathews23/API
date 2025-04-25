@@ -59,9 +59,9 @@ class ClientBase(SQLModel):
     Base model for Client, includes common fields.
     """
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-    name: str
-    email: EmailStr
-    phone: str
+    name: str = Field(default=None)
+    email: EmailStr = Field(default=None)
+    phone: str = Field(default=None)
 
 class Client(ClientBase, table=True):
     """

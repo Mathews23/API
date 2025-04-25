@@ -9,7 +9,7 @@ from datetime import datetime
 from sqlmodel import Field, SQLModel
 from pydantic import EmailStr, constr, HttpUrl
 
-PhoneNumber = constr(regex=r"^\+?[1-9]\d{1,14}$")
+
 from uuid import UUID, uuid4
 
 # ----------- Platform Models -----------
@@ -56,9 +56,7 @@ class ClientBase(SQLModel):
     """
     name: str
     email: EmailStr
-    phone: PhoneNumber
-    email: EmailStr
-    phone: constr(regex=r"^\+?[1-9]\d{1,14}$")
+    phone: str
 
 class Client(ClientBase, table=True):
     """

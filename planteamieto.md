@@ -12,7 +12,14 @@ Se define como funcionalidad todas las capacidades que tiene este software
 - Dashboard de Seguimiento de Campgna
 - Interfaces de registro y modificacion de campagna, cuentas, personas fisicas, clientes y equipos
 # Entidades y Modelos
-## 
+## Plataforma
+La entidad de plataforma representa a las redes sociales donde se hacen las publicaciones
+### Atributos
+- id: identificador unico en el software. De tipo entero ya que es de una cantidad reducida
+- nombre: nombre de la red social. De tipo string ya que solo es una cadena de caracteres
+- url: la direccion en la cual se encuentra la red social. De tipo string ya que solo suele ser un cadena de caracteres
+### Modelos
+- Platform 
 # Endpoints
 # Esquemas
 # Servicios

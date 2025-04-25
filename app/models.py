@@ -15,26 +15,36 @@ class PlatformBase(SQLModel):
     Base model for Platform, includes common fields.
     """
     name: str
+    url: str
+
+class Platform(PlatformBase, table=True):
+    """
+    ORM model for the Platform table.
+    """
+    id: str = Field(default=None, primary_key=True)
+   
 
 class PlatformCreate(PlatformBase):
-    """
-    Model for creating a new Platform.
-    """
-    # No additional fields
-    ...
+    pass
 
 class PlatformRead(PlatformBase):
     """
     Model for reading Platform data, includes ID.
     """
-    id: int
+    id: str
 
-class Platform(SQLModel, table=True):
+class PlatformUpdate(PlatformBase):
     """
-    ORM model for the Platform table.
+    Model for updating Platform data, includes ID.
     """
-    id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
+    id: str
+    
+
+class PlatformDelete(PlatformBase):
+    """
+    Model for deleting Platform data, includes ID.
+    """
+    id: str
 
 # ----------- Client Models -----------
 
@@ -43,26 +53,40 @@ class ClientBase(SQLModel):
     Base model for Client, includes common fields.
     """
     name: str
+    email: str
+    phone: str
+
+class Client(ClientBase, table=True):
+    """
+    ORM model for the Client table.
+    """
+    id: str = Field(default=None, primary_key=True)
 
 class ClientCreate(ClientBase):
     """
     Model for creating a new Client.
     """
-    ...
+    pass
 
 class ClientRead(ClientBase):
     """
     Model for reading Client data, includes ID.
     """
-    id: int
+    id: str
 
-class Client(SQLModel, table=True):
+class ClientUpdate(ClientBase):
     """
-    ORM model for the Client table.
+    Model for updating Client data, includes ID.
     """
-    id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
+    id: str
 
+class ClientDelete(ClientBase):
+    """
+    Model for deleting Client data, includes ID.
+    """
+    id: str
+
+    
 # ----------- Person Models -----------
 
 class PersonBase(SQLModel):

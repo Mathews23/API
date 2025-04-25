@@ -18,6 +18,7 @@ class PlatformBase(SQLModel):
     """
     Base model for Platform, includes common fields.
     """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str = Field(default=None)
     url: HttpUrl = Field(default=None)
 
@@ -25,7 +26,7 @@ class Platform(PlatformBase, table=True):
     """
     ORM model for the Platform table.
     """
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    
    
 
 class PlatformCreate(PlatformBase):
@@ -35,20 +36,20 @@ class PlatformRead(PlatformBase):
     """
     Model for reading Platform data, includes ID.
     """
-    id: UUID
+    
 
 class PlatformUpdate(PlatformBase):
     """
     Model for updating Platform data, includes ID.
     """
-    id: UUID
+   
     
 
 class PlatformDelete(PlatformBase):
     """
     Model for deleting Platform data, includes ID.
     """
-    id: UUID
+    
 
 
 # ----------- Client Models -----------
@@ -57,6 +58,7 @@ class ClientBase(SQLModel):
     """
     Base model for Client, includes common fields.
     """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str
     email: EmailStr
     phone: str
@@ -64,8 +66,9 @@ class ClientBase(SQLModel):
 class Client(ClientBase, table=True):
     """
     ORM model for the Client table.
+    Include all fields to create a complete representation of the Client.
     """
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    
 
 class ClientCreate(ClientBase):
     """
@@ -77,19 +80,19 @@ class ClientRead(ClientBase):
     """
     Model for reading Client data, includes ID.
     """
-    id: UUID
+    
 
 class ClientUpdate(ClientBase):
     """
     Model for updating Client data, includes ID.
     """
-    id: UUID
+    
 
 class ClientDelete(ClientBase):
     """
     Model for deleting Client data, includes ID.
     """
-    id: UUID
+    
 
 
 # ----------- Person Models -----------
@@ -98,6 +101,7 @@ class PersonBase(SQLModel):
     """
     Base model for Person, includes common fields.
     """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str = Field(default=None)
     email: EmailStr = Field(default=None)
     phone: str = Field(default=None)
@@ -106,7 +110,7 @@ class Persosn(PersonBase, table=True):
     """
     ORM model for the Person table.
     """
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    
     
 class PersonCreate(PersonBase):
     """
@@ -118,19 +122,19 @@ class PersonRead(PersonBase):
     """
     Model for reading Person data, includes ID.
     """
-    id: UUID
+    
 
 class PersonUpdate(PersonBase):
     """
     Model for updating Person data, includes ID.
     """
-    id: UUID
+    
 
 class PersonDelete(PersonBase):
     """
     Model for deleting Person data, includes ID.
     """
-    id: UUID
+    
 
 
 # ----------- Profile Models -----------

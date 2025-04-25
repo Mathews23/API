@@ -17,6 +17,8 @@ mysql_user = getenv("DB_USER", "root")
 # Check if the password is set
 if not password or not mysql_user:
     raise ValueError("Credentials environment variable not set")
+
+
 # Create the database URL
 mysql_url = f"mysql+pymysql://{mysql_user}:{password}@localhost:3306/posts"
 
@@ -39,5 +41,5 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-
+# Define a type alias for the session dependency
 SessionDep = Annotated[Session, Depends(get_session)]

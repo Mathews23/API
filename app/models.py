@@ -50,6 +50,9 @@ class PlatformDelete(PlatformBase):
     """
     id: UUID
 
+
+# ----------- Client Models -----------
+
 class ClientBase(SQLModel):
     """
     Base model for Client, includes common fields.

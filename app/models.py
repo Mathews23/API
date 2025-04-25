@@ -141,8 +141,7 @@ class ProfileBase(SQLModel):
     """
     name: str
     url: HttpUrl
-    person_id: Optional[UUID]
-    platform_id: Optional[UUID]
+    
     
     
 class Profile(ProfileBase, table=True):
@@ -151,6 +150,8 @@ class Profile(ProfileBase, table=True):
     """
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
+    person_id: UUID = Field(foreign_key="person.id")
+    platform_id: UUID = Field(foreign_key="platform.id")
 
 class ProfileCreate(ProfileBase):
     """

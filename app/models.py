@@ -18,8 +18,8 @@ class PlatformBase(SQLModel):
     """
     Base model for Platform, includes common fields.
     """
-    name: str
-    url: HttpUrl
+    name: str = Field(default=None)
+    url: HttpUrl = Field(default=None)
 
 class Platform(PlatformBase, table=True):
     """
@@ -98,9 +98,9 @@ class PersonBase(SQLModel):
     """
     Base model for Person, includes common fields.
     """
-    name: str
-    email: EmailStr
-    phone: str
+    name: str = Field(default=None)
+    email: EmailStr = Field(default=None)
+    phone: str = Field(default=None)
     
 class Persosn(PersonBase, table=True):
     """
@@ -139,8 +139,8 @@ class ProfileBase(SQLModel):
     """
     Base model for Profile, includes common fields.
     """
-    name: str
-    url: HttpUrl
+    name: str = Field(default=None)
+    url: HttpUrl = Field(default=None)
     
     
     

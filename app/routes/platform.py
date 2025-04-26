@@ -3,8 +3,11 @@ Endpoints for platform-related operations.
 """
 from fastapi import APIRouter, Depends, HTTPException
 
+router = APIRouter()
+
 
 # Crear Platform
+
 
 # Leer todas las Plataforms registradas
 

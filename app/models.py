@@ -5,7 +5,7 @@ Models are implemented using SQLModel for data validation and ORM capabilities.
 """
 
 from typing import Optional
-from datetime import datetime
+from datetime import UTC, datetime
 from sqlmodel import Field, SQLModel, Relationship
 from pydantic import EmailStr, HttpUrl
 
@@ -157,6 +157,7 @@ class Profile(ProfileBase, table=True):
     person_id: UUID = Field(foreign_key="person.id")
     person: Optional["Person"] = Relationship(back_populates="person")
     platform_id: UUID = Field(foreign_key="platform.id")
+    platform: Optional["Platform"] = Relationship(back_populates="platform")
 
 class ProfileCreate(ProfileBase):
     """
@@ -187,9 +188,64 @@ class ProfileDelete(ProfileBase):
 
 # ----------- Type Models -----------
 
+class TypeBase(SQLModel):
+    """
+    Base model for Type, includes common fields.
+    """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    name: str = Field(default=None)
+    description: str = Field(default=None)
+    platform_id: UUID = Field(foreign_key="platform.id")
 
+class Type(TypeBase, table=True):
+    """
+    ORM model for the Type table.
+    """
+    created_at: datetime = Field(default_factory=datetime.now(UTC))
+    platform: Optional["Platform"] = Relationship(back_populates="platform")
+
+class TypeCreate(TypeBase):
+    """
+    Model for creating a new Type.
+    """
+    pass
+
+class TypeRead(SQLModel):
+    """
+    Model for reading Type data, includes ID.
+    """
+    ID = UUID
+
+class TypeUpdate(TypeBase):
+    """
+    Model for updating Type data, includes ID.
+    """
+
+
+class TypeDelete(SQLModel):
+    """
+    Model for deleting Type data, includes ID.
+    """
 
 # ----------- Campaign Models -----------
+
+class CampaignBase(SQLModel):
+    """
+    Base model for Campaign, includes common fields.
+    """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    name: str = Field(default=None)
+    description: str = Field(default=None)
+    start_date: datetime = Field(default=None)
+    end_date: datetime = Field(default=None)
+    client_id: UUID = Field(foreign_key="client.id")
+
+class Campaign(CampaignBase, table=True):
+    """
+    ORM model for the Campaign table.
+    """
+    created_at: datetime = Field(default_factory=datetime.now(UTC))
+    client: Optional["Client"] = Relationship(back_populates="type")
 
 
 

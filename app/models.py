@@ -201,7 +201,7 @@ class Type(TypeBase, table=True):
     """
     ORM model for the Type table.
     """
-    created_at: datetime = Field(default_factory=datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     platform: Optional["Platform"] = Relationship(back_populates="platform")
 
 class TypeCreate(TypeBase):
@@ -226,6 +226,7 @@ class TypeDelete(SQLModel):
     """
     Model for deleting Type data, includes ID.
     """
+    ID = UUID
 
 # ----------- Campaign Models -----------
 
@@ -244,12 +245,43 @@ class Campaign(CampaignBase, table=True):
     """
     ORM model for the Campaign table.
     """
-    created_at: datetime = Field(default_factory=datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     client: Optional["Client"] = Relationship(back_populates="type")
 
+class CampaignCreate(CampaignBase):
+    """
+    Model for creating a new Campaign.
+    """
+    pass
 
+class CampaignRead(SQLModel):
+    """
+    Model for reading Campaign data, includes ID.
+    """
+    ID = UUID
+
+class CampaignUpdate(CampaignBase):
+    """
+    Model for updating Campaign data, includes ID.
+    """
+    pass
+
+class CampaignDelete(SQLModel):
+    """
+    Model for deleting Campaign data, includes ID.
+    """
+    ID = UUID
 
 # ----------- Post Models -----------
+
+class PostBase(SQLModel):
+    """
+    Base Model for Post, includes common fields.
+    """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    reference_id: str = Field(default=None)
+    platform_id: UUID = Field(foreign_key="platform.id")
+    type_id: UUID = Field(foreign_key="type.id")
 
 
 

@@ -6,8 +6,8 @@ Models are implemented using SQLModel for data validation and ORM capabilities.
 
 from typing import Optional
 from datetime import datetime
-from sqlmodel import Field, SQLModel
-from pydantic import EmailStr, constr, HttpUrl
+from sqlmodel import Field, SQLModel, Relationship
+from pydantic import EmailStr, HttpUrl
 
 
 from uuid import UUID, uuid4
@@ -106,7 +106,7 @@ class PersonBase(SQLModel):
     email: EmailStr = Field(default=None)
     phone: str = Field(default=None)
     
-class Persosn(PersonBase, table=True):
+class Person(PersonBase, table=True):
     """
     ORM model for the Person table.
     """
@@ -143,8 +143,9 @@ class ProfileBase(SQLModel):
     """
     Base model for Profile, includes common fields.
     """
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str = Field(default=None)
-    url: HttpUrl = Field(default=None)
+    profile_url: HttpUrl = Field(default=None)
     
     
     
@@ -152,9 +153,9 @@ class Profile(ProfileBase, table=True):
     """
     ORM model for the Profile table.
     """
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     person_id: UUID = Field(foreign_key="person.id")
+    person: Optional["Person"] = Relationship(back_populates="person")
     platform_id: UUID = Field(foreign_key="platform.id")
 
 class ProfileCreate(ProfileBase):
@@ -168,20 +169,20 @@ class ProfileRead(ProfileBase):
     """
     Model for reading Profile data, includes ID.
     """
-    id: UUID
+    
     
 class ProfileUpdate(ProfileBase):
     """
     Model for updating Profile data, includes ID.
     """
-    id: UUID
+   
     
 
 class ProfileDelete(ProfileBase):
     """
     Model for deleting Profile data, includes ID.
     """
-    id: UUID
+    
     
 
 # ----------- Type Models -----------

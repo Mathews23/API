@@ -7,7 +7,7 @@ Models are implemented using SQLModel for data validation and ORM capabilities.
 from typing import Optional
 from datetime import UTC, datetime
 from sqlmodel import Field, SQLModel, Relationship
-from pydantic import EmailStr, HttpUrl
+from pydantic import EmailStr
 
 
 from uuid import UUID, uuid4
@@ -20,7 +20,7 @@ class PlatformBase(SQLModel):
     """
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str = Field(default=None)
-    url: HttpUrl = Field(default=None)
+    url: str = Field(default=None)
 
 class Platform(PlatformBase, table=True):
     """
@@ -145,7 +145,7 @@ class ProfileBase(SQLModel):
     """
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str = Field(default=None)
-    profile_url: HttpUrl = Field(default=None)
+    profile_url: str = Field(default=None)
     
     
     
@@ -210,23 +210,22 @@ class TypeCreate(TypeBase):
     """
     pass
 
-class TypeRead(SQLModel):
+class TypeRead(TypeBase):
     """
     Model for reading Type data, includes ID.
     """
-    ID = UUID
-
+    
 class TypeUpdate(TypeBase):
     """
     Model for updating Type data, includes ID.
     """
 
 
-class TypeDelete(SQLModel):
+class TypeDelete(TypeBase):
     """
     Model for deleting Type data, includes ID.
     """
-    ID = UUID
+    
 
 # ----------- Campaign Models -----------
 
@@ -254,11 +253,11 @@ class CampaignCreate(CampaignBase):
     """
     pass
 
-class CampaignRead(SQLModel):
+class CampaignRead(CampaignBase):
     """
     Model for reading Campaign data, includes ID.
     """
-    ID = UUID
+    
 
 class CampaignUpdate(CampaignBase):
     """
@@ -266,11 +265,11 @@ class CampaignUpdate(CampaignBase):
     """
     pass
 
-class CampaignDelete(SQLModel):
+class CampaignDelete(CampaignBase):
     """
     Model for deleting Campaign data, includes ID.
     """
-    ID = UUID
+    
 
 # ----------- Post Models -----------
 

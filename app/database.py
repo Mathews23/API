@@ -20,7 +20,7 @@ if not password or not mysql_user:
 
 
 # Create the database URL
-mysql_url = f"mysql+pymysql://{mysql_user}:{password}@localhost:3306/posts"
+mysql_url = f"mysql+pymysql://{mysql_user}:{password}@localhost:3306/test"
 
 # Create the database engine
 engine = create_engine(mysql_url, echo=True)

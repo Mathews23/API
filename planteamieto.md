@@ -37,7 +37,10 @@ La entidad de plataforma representa a las redes sociales donde se hacen las publ
 ### Metodos
 - Crear Plataforma: Registra una plataforma una plataforma 
     - Recibe el nombre y la descripcion de la plataforma y los inserta en una fila nueva de la tabla plataforma
-
+    - Retorna el objeto creado
+- Actualizar Plataforma: altera un registro de una plataforma 
+    - Recibe el id y el nombre de la plataforma que se vaya a cambiar, junto con el cambio con los cambios guardados 
+    - Retorna un codigo HTTP 200 y un mensaje que indica que la operacion fue correcta.
 # Endpoints
 # Esquemas
 # Servicios

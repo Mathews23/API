@@ -25,11 +25,7 @@ mysql_url = f"mysql+pymysql://{mysql_user}:{password}@localhost:3306/test"
 # Create the database engine
 engine = create_engine(mysql_url, echo=True)
 
-def create_db_and_tables(app: FastAPI):
-    """
-    Create the database and tables if they don't exist.
-    """
-    SQLModel.metadata.create_all(engine)
+
 
 def get_session():
     """

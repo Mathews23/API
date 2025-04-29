@@ -22,6 +22,14 @@ class Person(SQLModel):
     first_name: str = Field(default="")
     last_name: str = Field(default="")
     mobile: str = Field(default="")
-    email: EmailStr = Field(default=None)
+    email: str = Field(default="")
     active: bool = Field(default=True)
     address: str = Field(default="")
+
+class PersonCreate(SQLModel):
+    first_name: str
+    last_name: str
+    mobile: str
+    email: str
+    active: bool = True
+    address: str

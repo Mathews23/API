@@ -3,7 +3,7 @@ This module initializes the FastAPI application and defines the root endpoint.
 """
 import uvicorn
 from fastapi import FastAPI
-from app.routes import platform, person
+from routes import platform, person
 
 app = FastAPI()
 
@@ -25,8 +25,3 @@ async def root():
     return {"message": "Hello World"}
 
 
-if __name__ == "__main__":
-    """
-    Main entry point for the application. Runs the FastAPI app using Uvicorn.
-    """
-    uvicorn.run(app, host="127.0.0.1", port=8000)

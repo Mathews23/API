@@ -1,9 +1,9 @@
 """
 This module initializes the FastAPI application and defines the root endpoint.
 """
-import uvicorn
+
 from fastapi import FastAPI
-from routes import platform, person
+from app.routes import person
 
 app = FastAPI()
 

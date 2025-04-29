@@ -2,7 +2,7 @@
 Endpoints for platform-related operations.
 """
 from fastapi import APIRouter, Depends, HTTPException
-from database import SessionDep
+from app.database import SessionDep
 
 router = APIRouter()
 

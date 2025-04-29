@@ -14,7 +14,7 @@ from uuid import UUID, uuid4
 
 # ----------- Person Models -----------
 
-class Person(SQLModel):
+class Person(SQLModel, table=True):
     """
     Represents a person with a unique identifier, name, and email.
     """
@@ -26,10 +26,8 @@ class Person(SQLModel):
     active: bool = Field(default=True)
     address: str = Field(default="")
 
-class PersonCreate(SQLModel):
-    first_name: str
-    last_name: str
-    mobile: str
-    email: str
-    active: bool = True
-    address: str
+class PersonCreate(Person):
+    """
+    Represents the data required to create a new person.
+    """
+    pass

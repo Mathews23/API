@@ -17,9 +17,12 @@ async def create_person(person: PersonCreate, session: SessionDep):
     """
     # Implement the logic to create a new person
     # Check if the person already exists
+        # If the person already exists, raise an HTTPException
     # Add the person to the session
     session.add(person)
+    # Commit the session to save the changes
     session.commit()
+    # Refresh the session to get the latest data
     session.refresh(person)
     
     return person

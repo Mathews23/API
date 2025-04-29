@@ -57,3 +57,48 @@ def create_person(person: PersonCreate, session: Session = Depends(get_session))
     session.commit()
     session.refresh(db_person)
     return db_person
+
+# Actualizar persona
+@router.put("/people/{person_id}", response_model=Person)
+def update_person(person_id: int, person: PersonCreate, session: Session = Depends(get_session)):
+    """
+    Update an existing person.
+
+    Args:
+        person_id (int): ID of the person to update.
+        person (PersonCreate): The updated person data.
+        session (Session): Database session.
+
+    Returns:
+        Person: The updated person.
+    """
+    db_person = session.get(Person, person_id)
+    if not db_person:
+        raise HTTPException(404, "Persona no encontrada")
+    db_person_data = person.model_dump(exclude_unset=True)
+    for key, value in db_person_data.items():
+        setattr(db_person, key, value)
+    session.add(db_person)
+    session.commit()
+    session.refresh(db_person)
+    return db_person
+
+# Eliminar persona
+@router.delete("/people/{person_id}", response_model=Person)
+def delete_person(person_id: int, session: Session = Depends(get_session)):
+    """
+    Delete a person by ID.
+
+    Args:
+        person_id (int): ID of the person to delete.
+        session (Session): Database session.
+
+    Returns:
+        Person: The deleted person.
+    """
+    db_person = session.get(Person, person_id)
+    if not db_person:
+        raise HTTPException(404, "Persona no encontrada")
+    session.delete(db_person)
+    session.commit()
+    return db_person

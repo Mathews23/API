@@ -2,7 +2,7 @@
 Endpoints for platform-related operations.
 """
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from app.database import SessionDep
 from app.models import Platform, PlatformBase
 

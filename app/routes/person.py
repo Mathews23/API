@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import select
 from app.models import Person, PersonCreate
 from app.database import SessionDep
 

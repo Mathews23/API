@@ -5,7 +5,6 @@ Models are implemented using SQLModel for data validation and ORM capabilities.
 """
 
 from typing import Optional, List
-from uuid import UUID, uuid4
 from datetime import datetime, date
 from sqlmodel import SQLModel, Field, Relationship
 

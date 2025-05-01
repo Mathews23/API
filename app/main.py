@@ -3,7 +3,7 @@ This module initializes the FastAPI application and defines the root endpoint.
 """
 
 from fastapi import FastAPI
-from app.routes import person, platform, client
+from app.routes import person, platform, client, type
 
 app = FastAPI()
 
@@ -11,7 +11,7 @@ app = FastAPI()
 app.include_router(person.router, prefix="/people", tags=["people"])
 app.include_router(platform.router, prefix="/platforms", tags=["platforms"])
 app.include_router(client.router, prefix="/clients", tags=["clients"])
-
+app.include_router(type.router, prefix="/types", tags=["types"])
 
 
 @app.get("/")

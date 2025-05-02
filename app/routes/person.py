@@ -83,7 +83,7 @@ def update_person(person_id: int, person: PersonCreate, session: SessionDep):
     session.refresh(db_person)
     return db_person
 
-# Eliminar persona
+# Eliminate person
 @router.delete("/people/{person_id}", response_model=Person)
 def delete_person(person_id: int, session: SessionDep):
     """

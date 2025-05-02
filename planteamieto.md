@@ -44,3 +44,7 @@ La entidad de plataforma representa a las redes sociales donde se hacen las publ
 # Endpoints
 # Esquemas
 # Servicios
+
+# To Do
+[] Mapear posts a objeto Publicacion
+[] Crear SPs que creen o actualicen los registros de publicaciones

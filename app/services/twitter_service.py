@@ -11,6 +11,11 @@ from app.models import Profile
 class TwitterService:
     """
     Servicio para obtener publicaciones de Twitter usando la API v2 y Tweepy.
+    Metodos:
+    Inicializador: Construye la instacia del servicio inicializando el cliente de tweepy
+    utilizando en Bearer Token.
+    Posts_Query_Builder: Construye el query utilizado para buscar los posts de usuarios
+
     """
     def __init__(self):
         """
@@ -34,7 +39,7 @@ class TwitterService:
         return [tweet.text for tweet in tweets.data] if tweets.data else []
 
     @staticmethod
-    def build_posts_query(accounts: list[str], start_date: str, end_date: str, keyword: str) -> str:
+    def posts_query_builder(accounts: list[str], start_date: str, end_date: str, keyword: str) -> str:
         """
         Build a query to retrieve posts from specified accounts, within a date range,
         that include a certain keyword or hashtag.

@@ -15,7 +15,7 @@ if not password or not mysql_user:
 
 mysql_url = f"mysql+pymysql://{mysql_user}:{password}@localhost:3306/test"
 engine = create_engine(mysql_url, echo=True)
-SQLModel.metadata.create_all(engine)
+
 
 def get_session():
     with Session(engine) as session:

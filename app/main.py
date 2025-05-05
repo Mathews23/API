@@ -5,6 +5,9 @@ This module initializes the FastAPI application and defines the root endpoint.
 from fastapi import FastAPI
 from app.routes import person, platform, client, type
 
+
+
+# Initialize the FastAPI application
 app = FastAPI()
 
 # Include routers for different modules

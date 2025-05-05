@@ -3,7 +3,7 @@ Connect to the database and create the tables if they don't exist.
 """
 from os import getenv
 from dotenv import load_dotenv
-from sqlmodel import create_engine, Session, SQLModel
+from sqlmodel import create_engine, Session
 from fastapi import Depends
 from typing import Annotated
 

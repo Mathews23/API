@@ -2,79 +2,64 @@
 Servicio para interactuar con la API de Twitter usando Tweepy.
 Obtiene tweets de usuarios autenticándose con el Bearer Token.
 """
-import tweepy  # type: ignore
-import os
-from sqlmodel import select
-from app.database import SessionDep
-from app.models import Profile
+from sqlmodel import Session, select
+from datetime import datetime
+from app.models import Post, Profile
+from typing import Optional
 
 class TwitterService:
-    """
-    Servicio para obtener publicaciones de Twitter usando la API v2 y Tweepy.
-    Metodos:
-    Inicializador: Construye la instacia del servicio inicializando el cliente de tweepy
-    utilizando en Bearer Token.
-    Posts_Query_Builder: Construye el query utilizado para buscar los posts de usuarios
 
-    """
-    def __init__(self):
-        """
-        Inicializa el cliente de Tweepy usando el Bearer Token de las variables de entorno.
-        """
-        self.client = tweepy.Client(bearer_token=os.getenv("TWITTER_BEARER_TOKEN"))
+    def __init__(self, session: Session):
+        self.session = session
 
-    def get_user_tweets(self, username: str, max_results: int = 10):
-        """
-        Obtiene los tweets más recientes de un usuario por su nombre de usuario.
+    def get_profile_id_by_username(self, username: str) -> Optional[int]:
+        statement = select(Profile).where(Profile.handle == username)
+        profile = self.session.exec(statement).first()
+        return profile.id if profile else None
 
-        Args:
-            username (str): Nombre de usuario de Twitter (sin @).
-            max_results (int): Número máximo de tweets a obtener (por defecto 10).
+    def upsert_tweets(self, tweets_response):
+        for tweet in tweets_response.data:
+            metrics = tweet.public_metrics
 
-        Returns:
-            list[str]: Lista de textos de los tweets encontrados.
-        """
-        user = self.client.get_user(username=username)
-        tweets = self.client.get_users_tweets(user.data.id, max_results=max_results)
-        return [tweet.text for tweet in tweets.data] if tweets.data else []
+            # 👇 Extract author's username (from "includes" field)
+            username = None
+            for user in tweets_response.includes['users']:
+                if user.id == tweet.author_id:
+                    username = user.username
+                    break
 
-    @staticmethod
-    def posts_query_builder(accounts: list[str], start_date: str, end_date: str, keyword: str) -> str:
-        """
-        Build a query to retrieve posts from specified accounts, within a date range,
-        that include a certain keyword or hashtag.
+            # Match profile_id
+            profile_id = self.get_profile_id_by_username(username) if username else None
 
-        Args:
-            accounts (list): List of account names (strings) to filter posts.
-            start_date (str): Start date in YYYY-MM-DD format.
-            end_date (str): End date in YYYY-MM-DD format.
-            keyword (str): The keyword or hashtag to search for.
-        
-        Returns:
-            str: The constructed query string.
-        """
-        # Build accounts filter.
-        accounts_filter = " OR ".join([f"from:{account}" for account in accounts])
-        accounts_filter = f"({accounts_filter})"
-        
-        # Build date range filter.
-        date_filter = f"since:{start_date} until:{end_date}"
-        
-        # Combine everything with the keyword.
-        query = f"{accounts_filter} {keyword} {date_filter}"
-        return query
-    
-    def get_user_from_db(self, db: SessionDep, username: Profile):
-        """
-        Obtiene el nombre de usuario de la base de datos.
+            # Check if post exists
+            statement = select(Post).where(Post.id == tweet.id)
+            existing_post = self.session.exec(statement).first()
 
-        Args:
-            db: Sesión de la base de datos.
-            username (Profile): Nombre de usuario a buscar.
+            if existing_post:
+                # Update
+                existing_post.like_count = metrics.get('like_count', 0)
+                existing_post.reply_count = metrics.get('reply_count', 0)
+                existing_post.bookmark_count = metrics.get('bookmark_count', 0)
+                existing_post.impression_count = metrics.get('impression_count', 0)
+                existing_post.last_updated_at = datetime.utcnow()
+                existing_post.profile_id = profile_id  # update link
+            else:
+                # Insert
+                new_post = Post(
+                    id=tweet.id,
+                    profile_id=profile_id,
+                    campaign_id=None,
+                    type_id=None,
+                    reference_id=None,
 
-        Returns:
-            str: Nombre de usuario encontrado o None si no existe.
-        """
-        stmt = select(Profile).where(Profile.handle == username.handle)
-        user = db.exec(stmt).first()
-        return user.handle if user else None
+                    like_count=metrics.get('like_count', 0),
+                    reply_count=metrics.get('reply_count', 0),
+                    bookmark_count=metrics.get('bookmark_count', 0),
+                    impression_count=metrics.get('impression_count', 0),
+
+                    last_updated_at=datetime.utcnow()
+                )
+                self.session.add(new_post)
+
+        self.session.commit()
+        return {"message": f"Upserted {len(tweets_response.data)} tweets."}

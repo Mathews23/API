@@ -4,7 +4,7 @@ This module initializes the FastAPI application and defines the root endpoint.
 
 from fastapi import FastAPI
 from app.routes import person, platform, client, type
-import tweepy
+import tweepy  # type: ignore
 from os import getenv
 from dotenv import load_dotenv
 

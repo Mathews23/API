@@ -2,14 +2,15 @@
 Servicio para interactuar con la API de Twitter usando Tweepy.
 Obtiene tweets de usuarios autenticándose con el Bearer Token.
 """
-from sqlmodel import Session, select
+from sqlmodel import select
 from datetime import datetime
 from app.models import Post, Profile
 from typing import Optional
+from app.database import SessionDep
 
 class TwitterService:
 
-    def __init__(self, session: Session):
+    def __init__(self, session: SessionDep):
         self.session = session
 
     def get_profile_id_by_username(self, username: str) -> Optional[int]:

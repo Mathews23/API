@@ -17,6 +17,9 @@ headers = {
     #  Busco la campaña por nombre
     # Obtener el id de esa campaña, obtener los equipos asociados
     # Obtener el id de la obtener el encargado de la campaña
+    # In: id de la campaña
+    # Out: dict con tres llaves: 'nombre de equipo': int, 'id de equipo': int e 'integrantes del equipo': list[str]
+    # Escribir store procedure que busque los integrantes de un grupo
 # Armar query
     # Filtrar por equipos
     # Filtrar por fecha

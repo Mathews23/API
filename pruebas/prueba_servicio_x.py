@@ -30,5 +30,5 @@ query_string = {
 }
 response = requests.get(url, headers=headers, params=query_string)
 
-data = response.json()
-print(data)
+# data = response.json()
+print(response.text)

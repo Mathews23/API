@@ -25,7 +25,7 @@ class TwitterService:
             # 👇 Extract author's username (from "includes" field)
             username = None
             for user in tweets_response.includes['users']:
-                if user.id == tweet.author_id:
+                if user.id == tweet.author_id: # Not the same id
                     username = user.username
                     break
 

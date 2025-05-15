@@ -21,7 +21,8 @@ headers = {"Authorization": f"Bearer {bearer_token}"}
 # In: id de la campaña
 # Out: dict con tres llaves:
 # 'nombre de equipo': int,
-# 'id de equipo': int e 'integrantes del equipo': list[str]
+# 'id de equipo': int,
+# 'integrantes del equipo': list[str]
 # Escribir store procedure que busque los integrantes de un grupo
 # Armar query
 # Filtrar por equipos

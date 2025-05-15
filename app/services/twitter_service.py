@@ -11,7 +11,7 @@ import tweepy
 
 class TwitterService:
     """
-    Servicio para interactuar con la API de Twitter usando Tweepy.
+    Service to interact with Twitter API using Tweepy.
     """
 
     def __init__(self):
@@ -19,7 +19,12 @@ class TwitterService:
 
     async def get_tweets(self, query: str, max_results: int):
         """
-        Obtiene tweets de forma asíncrona según la consulta y obtiene la cantidad solicitada.
+        Retrieves recent tweets based on the provided query.
+        Args:
+            query (str): The search query string.
+            max_results (int): The maximum number of tweets to retrieve.
+        Returns:
+            list: A list of tweets matching the query.
         """
         tweets = await asyncio.to_thread(
             self.client.search_recent_tweets, query=query, max_results=max_results
@@ -29,7 +34,7 @@ class TwitterService:
     @staticmethod
     def create_query(team: list[str], start_date: str, end_date: str):
         """
-        Crea una consulta para buscar tweets de un equipo específico entre dos fechas.
+        Creates a query string for searching tweets.
         """
-        query = f"from:{team} since:{start_date} until:{end_date}"
+        query = f"from:{' OR from:'.join(team)} since:{start_date} until:{end_date}"
         return query

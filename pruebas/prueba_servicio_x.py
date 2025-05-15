@@ -28,7 +28,7 @@ query_string = {
     "tweet.fields": "public_metrics",
     
 }
-response = requests.get(url, headers=headers, params=query_string)
+response = requests.get(url, headers=headers, params=query_string, timeout=10)
 
 # data = response.json()
 print(response.text)

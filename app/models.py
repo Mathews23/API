@@ -52,7 +52,7 @@ class PersonCreate(PersonBase):
     """
     Model for validating data when creating a new person.
     """
-    pass
+    
 
 
 # ----------- Profile Models -----------

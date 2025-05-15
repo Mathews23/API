@@ -10,4 +10,4 @@ class TwitterService:
     """
     def __init__(self):
         self.headers = {
-            'Authorization': f'Bearer {getenv("TWITTER_BEARER_TOKE")}' }
+            'Authorization': f'Bearer {getenv("TWITTER_BEARER_TOKEN")}' }

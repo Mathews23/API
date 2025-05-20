@@ -2,7 +2,7 @@ import asyncio
 from app.services.twitter_service import TwitterService
 
 # Parámetros de prueba (ajusta según tus datos reales)
-TEAM = ["TwitterDev"]  # Lista de handles de Twitter
+TEAM = ["XDevelopers"]  # Lista de handles de Twitter
 START_DATE = "2025-05-01"
 END_DATE = "2025-05-20"
 MAX_RESULTS = 10
@@ -12,7 +12,7 @@ TYPE_ID = 1
 
 async def main():
     service = TwitterService()
-    query = service.create_query(TEAM, START_DATE, END_DATE)
+    query = service.create_query(TEAM)
     try:
         inserted = await service.fetch_and_store_tweets(
             query=query,

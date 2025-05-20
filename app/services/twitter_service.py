@@ -37,11 +37,11 @@ class TwitterService:
         return tweets
 
     @staticmethod
-    def create_query(team: list[str], start_date: str, end_date: str):
+    def create_query(team: list[str]):
         """
         Creates a query string for searching tweets.
         """
-        query = f"from:{' OR from:'.join(team)} since:{start_date} until:{end_date}"
+        query = f"from:{' OR from:'.join(team)}"
         return query
 
     async def fetch_and_store_tweets(

@@ -172,3 +172,14 @@ class Type(TypeBase, table=True):
 
     id: int = Field(default=None, primary_key=True)
     posts: List[Post] = Relationship(back_populates="type")
+
+
+# ----------- User Models -----------
+
+class User(SQLModel):
+    id: int
+    username: str
+    hash_password: str
+    email: str
+    is_active: bool = True
+    role: str

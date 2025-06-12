@@ -176,10 +176,24 @@ class Type(TypeBase, table=True):
 
 # ----------- User Models -----------
 
-class User(SQLModel):
-    id: int
+class User(SQLModel, table=True):
+    id: int | None
     username: str
     hash_password: str
     email: str
     is_active: bool = True
-    role: str
+    role: str = "viewer"
+
+class UserCreate(SQLModel):
+    username: str
+    password: str
+    email: str
+    role: str | None = "viewer"
+
+class UserRead(SQLModel):
+    username: str | None = None
+    email: str
+    password: str
+
+
+

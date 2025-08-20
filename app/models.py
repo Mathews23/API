@@ -79,8 +79,10 @@ class Profile(ProfileBase, table=True):
     id: int = Field(default=None, primary_key=True)
     platform_id: int = Field(foreign_key="platform.id")
     person_id: int = Field(foreign_key="person.id")
+    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
     platform: Optional[Platform] = Relationship(back_populates="profiles")
     person: Optional[Person] = Relationship(back_populates="profiles")
+    team: Optional["Team"] = Relationship(back_populates="profiles")
     posts: List["Post"] = Relationship(back_populates="profile")
 
 
@@ -133,6 +135,7 @@ class Campaign(CampaignBase, table=True):
     client_id: int = Field(foreign_key="client.id")
     client: Optional["Client"] = Relationship(back_populates="campaigns")
     posts: List[Post] = Relationship(back_populates="campaign")
+    teams: List["Team"] = Relationship(back_populates="campaign")
 
 
 # ----------- Client Models -----------
@@ -196,6 +199,52 @@ class UserRead(SQLModel):
     email: str
     role: str
     is_active: bool
+
+
+# ----------- Team Models -----------
+class TeamBase(SQLModel):
+    """
+    Base model for a team of people.
+    """
+    name: str
+    description: Optional[str] = None
+    active: bool = True
+
+
+class Team(TeamBase, table=True):
+    """
+    Represents a row in the team table.
+    Each team is associated with a campaign and has multiple profiles.
+    """
+    id: int = Field(default=None, primary_key=True)
+    campaign_id: Optional[int] = Field(default=None, foreign_key="campaign.id")
+    campaign: Optional[Campaign] = Relationship(back_populates="teams")
+    profiles: List["Profile"] = Relationship(back_populates="team")
+
+
+class TeamCreate(TeamBase):
+    """
+    Model for validating data when creating a new team.
+    """
+    campaign_id: Optional[int] = None
+
+
+class TeamRead(TeamBase):
+    """
+    Model for reading team data.
+    """
+    id: int
+    campaign_id: Optional[int] = None
+
+
+class TeamUpdate(SQLModel):
+    """
+    Model for updating team data.
+    """
+    name: Optional[str] = None
+    description: Optional[str] = None
+    active: Optional[bool] = None
+    campaign_id: Optional[int] = None
 
 
 

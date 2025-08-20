@@ -4,7 +4,7 @@ This module initializes the FastAPI application and defines the root endpoint.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import content_type, person, platform, client, campaign, analytics, twitter_fetch
+from app.routes import content_type, person, platform, client, campaign, analytics, twitter_fetch, teams
 
 # Initialize the FastAPI application with lifespan
 app = FastAPI(
@@ -38,6 +38,7 @@ app.include_router(content_type.router, prefix="/types", tags=["types"])
 app.include_router(campaign.router, prefix="/campaigns", tags=["campaigns"])
 app.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
 app.include_router(twitter_fetch.router, prefix="/twitter", tags=["twitter"])
+app.include_router(teams.router, prefix="/teams", tags=["teams"])
 
 # Access the Tweepy client in any endpoint
 @app.get("/")

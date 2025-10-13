@@ -4,6 +4,11 @@ for platforms, clients, people, profiles, types, campaigns, posts, and replies.
 Models are implemented using SQLModel for data validation and ORM capabilities.
 """
 
+
+'''
+Dividir los modelos en diferentes archivos segun su funcionalidad
+'''
+
 from typing import Optional, List
 from datetime import datetime, date
 from sqlmodel import SQLModel, Field, Relationship

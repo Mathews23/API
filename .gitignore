@@ -25,3 +25,6 @@ __pycache__/
 *.pyo
 *.pyd
 *.so
+
+# Development plan
+DEVELOPMENT_PRIORITIES.txt

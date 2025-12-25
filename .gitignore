@@ -17,3 +17,11 @@ build/
 
 # Environment files for secrets
 .env
+
+# CPython compiled and related files
+__pycache__/
+*.py[cod]
+*.cpython-*.pyc
+*.pyo
+*.pyd
+*.so

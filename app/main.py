@@ -16,19 +16,19 @@ app = FastAPI(
 
 # Configure CORS middleware to allow cross-origin requests
 
-origins = [
-    "http://localhost:3000",  # Next.js development server
-    "http://localhost",
-    "http://127.0.0.1:3000"
-]
+# origins = [
+#     "http://localhost:3000",  # Next.js development server
+#     "http://localhost",
+#     "http://127.0.0.1:3000"
+# ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"]
+# )
 
 # Include routers for different modules
 app.include_router(person.router, prefix="/people", tags=["people"])
